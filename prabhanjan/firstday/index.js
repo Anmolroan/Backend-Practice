@@ -24,12 +24,18 @@
 // console.log(os.version())
 var calculator = require('./calculator');
 // console.log(calculator.add(1,2));
+const crypto =require('crypto');
 console.log(process.argv);
 var userArgs = process.argv.slice(2);
 // console.log(userArgs);
 if(userArgs[0]==="add"){
     console.log(calculator.add(+userArgs[1],+userArgs[2]));
 }else if(userArgs[0]==="sub"){
-    console.log(calculator.sub(+userArgs[1],+userArgs[2]))
+    console.log(calculator.subtract(+userArgs[1],+userArgs[2]))
+}else if(userArgs[0]==="mult"){
+    console.log(calculator.multiply(+userArgs[1],+userArgs[2]))
+}else if(userArgs[0]==="random"){
+    console.log(crypto.randomInt(2,1000))
+
 }
  
