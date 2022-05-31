@@ -10,6 +10,7 @@ app.get('/',(req,res)=>{
 })
 app.post('/',(req,res)=>{
     console.log(req.body);
+    res.status(201).send(req.body);
     console.log("home page post request");
 })
 function logger(req,res,next){
