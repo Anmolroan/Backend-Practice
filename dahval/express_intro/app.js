@@ -2,7 +2,7 @@ const express =require('express');
 const app = express();
 const port =1234;
 // app.use(logger);
-app.use(express.json())
+app.use(express.json());
 app.get('/',(req,res)=>{
     // console.log("home page get request");
     res.send("home page get request");
