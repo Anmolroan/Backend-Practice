@@ -5,6 +5,12 @@ function App() {
   let str="";
   const [todo,setTodo] = useState([]);
   const [text,setText] = useState("");
+  const [stat,setStatus] = useState(false);
+  const handleDelete =(id) => {
+fetch(`http://localhost:1234/${id}`,{
+  method: "DELETE",
+}).then((response) =>response.json()).then(data => setTodo(data));
+  }
   const handleShow =(data) => {
    setTodo( data);
   
@@ -13,7 +19,8 @@ function App() {
   const handleAdd =(str) => {
 const payload ={
   userId:nanoid(),
-name:text
+name:text,
+status:stat
 };
 fetch("http://localhost:1234",{
   method: 'POST',
@@ -36,7 +43,15 @@ fetch("http://localhost:1234",{
     <div className="App">
      <input type="text" onChange={(e) => setText(e.target.value)}/>
      <button onClick={()=>{handleAdd(str)}}>Add</button>
-     <div>{todo.map((el,i) => <div key ={i}>{el.name}</div>)}</div>
+     <div>
+     {todo.map((el,i) => <div key ={el.userId}>
+     <span>{el.name}</span>
+     <button>{!el.status?"Done":"Not Done"}</button>
+     <button>Update</button>
+     <button onClick={()=>handleDelete(el.userId)}>Delete</button>
+     </div>
+     )}
+     </div>
     </div>
   );
 }
