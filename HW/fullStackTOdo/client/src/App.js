@@ -1,8 +1,10 @@
-import {useState,useEffect} from "react"
+import {useState,useEffect,useRef} from "react"
 import './App.css';
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
+
 function App() {
   let str="";
+  const mainRef = useRef(null);
   const [todo,setTodo] = useState([]);
   const [text,setText] = useState("");
   const [stat,setStatus] = useState(false);
@@ -53,6 +55,9 @@ setText("")
     setUpdate(true);
     
     setId(id);
+   mainRef.current.scrollIntoView({
+      behavior: "smooth"
+    });
   };
   const handlePatch =()=>{
     const payload ={
@@ -69,8 +74,8 @@ setUpdate(false)
   }
   return (
     <div className=" bg-blue-200 todoContainer font-serif">
-      <div className="bg-blue-300 text-2xl p-2 ">MY TODO</div>
-     <input type="text" onChange={(e) => setText(e.target.value)} value ={text}className="ml-100 w-80 h-9 mainInput"/>
+      <div className="bg-blue-300 text-2xl p-2 " >MY TODO</div>
+     <input type="text" onChange={(e) => setText(e.target.value)} value ={text}className="ml-100 w-80 h-9 mainInput" ref={mainRef} />
      <button onClick={()=>{handleAdd(str)}}>Add</button>
 
      <div>
