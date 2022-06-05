@@ -33,7 +33,7 @@ fetch("http://localhost:1234",{
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify(payload)
 }).then((res)=>res.json()).then((data)=>setTodo(data));
-
+setText("")
 }
   
   useEffect(() =>{
@@ -68,27 +68,32 @@ status:isChecked
 setUpdate(false)
   }
   return (
-    <div className="App">
-     <input type="text" onChange={(e) => setText(e.target.value)}/>
+    <div className=" bg-blue-200 todoContainer font-serif">
+      <div className="bg-blue-300 text-2xl p-2 ">MY TODO</div>
+     <input type="text" onChange={(e) => setText(e.target.value)} value ={text}className="ml-100 w-80 h-9 mainInput"/>
      <button onClick={()=>{handleAdd(str)}}>Add</button>
+
      <div>
-     {todo.map((el,i) => <div key ={el.userId}>
-     <span>{el.name}</span>
-     <button>{!el.status?"Done":"Not Done"}</button>
+     {update  ? <div className="update">
+      
+      <input type="text" name="name" onChange={(e)=>setName(e.target.value)} />
+      <br></br>
+      <input type="checkbox" name="status" onChange={handleOnChange} checked={isChecked}/>
+      <br></br>
+      <button onClick={handlePatch}>Change data</button>
+    </div>: ""}
+     {todo.map((el,i) => <div key ={el.userId} className=" mt-10 items-center grid gap-4 grid-cols-2">
+     <div className="text-blue-500  border-2 p-1">{el.name}</div>
+     <div className="text-blue-500  border-2 p-1">
+     <button > {!el.status?"Done":"Not Done"}</button>
      <button onClick={()=>handleUpdate(el.userId)}>Update</button>
      <button onClick={()=>handleDelete(el.userId)}>Delete</button>
+     </div>
     
      </div>
      )}
      </div>
-     {update  ? <div className="update">
-      
-       <input type="text" name="name" onChange={(e)=>setName(e.target.value)}/>
-       <br></br>
-       <input type="checkbox" name="status" onChange={handleOnChange} checked={isChecked}/>
-       <br></br>
-       <button onClick={handlePatch}>Change data</button>
-     </div>: ""}
+   
     </div>
   );
 }
