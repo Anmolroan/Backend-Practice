@@ -88,8 +88,8 @@ setUpdate(false)
       <button onClick={handlePatch}>Change data</button>
     </div>: ""}
      {todo.map((el,i) => <div key ={el.userId} className=" mt-10 items-center grid gap-4 grid-cols-2">
-     <div className="text-blue-500  border-2 p-1">{el.name}</div>
-     <div className="text-blue-500  border-2 p-1">
+     <div className="text-blue-500  border-2 p-1  ">{el.name}</div>
+     <div className="text-blue-500  border-2 p-1 grid gap-7 grid-cols-3 ">
      <button > {!el.status?"Done":"Not Done"}</button>
      <button onClick={()=>handleUpdate(el.userId)}>Update</button>
      <button onClick={()=>handleDelete(el.userId)}>Delete</button>
