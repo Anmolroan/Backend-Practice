@@ -6,6 +6,13 @@ function App() {
   const [todo,setTodo] = useState([]);
   const [text,setText] = useState("");
   const [stat,setStatus] = useState(false);
+  const [update,setUpdate] = useState(false);
+  const [form,setForm] = useState({})
+  const handlePatch = (id)=>{
+    fetch(`http://localhost:1234/${id}`,{
+
+    })
+  }
   const handleDelete =(id) => {
 fetch(`http://localhost:1234/${id}`,{
   method: "DELETE",
@@ -47,11 +54,20 @@ fetch("http://localhost:1234",{
      {todo.map((el,i) => <div key ={el.userId}>
      <span>{el.name}</span>
      <button>{!el.status?"Done":"Not Done"}</button>
-     <button>Update</button>
+     <button onClick={()=>setUpdate(true)}>Update</button>
      <button onClick={()=>handleDelete(el.userId)}>Delete</button>
      </div>
      )}
      </div>
+     {update  ? <div className="update">
+       <input type="text" name="userId"/>
+       <br></br>
+       <input type="text" name="name"/>
+       <br></br>
+       <input type="text" name="status"/>
+       <br></br>
+       <button onClick={()=>setUpdate(false)}>Change data</button>
+     </div>: ""}
     </div>
   );
 }

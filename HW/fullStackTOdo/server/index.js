@@ -31,6 +31,22 @@ app.delete("/:id",function(req,res){
     console.log(req.params.id)
     
 })
+app.patch("/:id",function(req,res){
+    fs.readFile("./db.json",{encoding: "utf8"},(err, data)=>{
+        const parsed = JSON.parse(data);
+        // console.log(req.params.id,req.body.userId);
+      parsed.todos.forEach((el)=>{
+            if(el.userId == req.params.id){
+                console.log(el,req.params.id);
+               el.name= req.body.name;
+               el.status= req.body.status;
+            }
+        })
+        fs.writeFile("./db.json",JSON.stringify(parsed),{encoding: "utf8"},()=>{
+            res.send(parsed.todos)
+        });
+    })
+})
 app.listen(1234,() => {
     console.log('listening on http://localhost:1234');
 });
