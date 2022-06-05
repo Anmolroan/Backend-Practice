@@ -11,11 +11,7 @@ function App() {
     setIsChecked(!isChecked);
     console.log(isChecked)
   };
-  const handlePatch = (id)=>{
-    fetch(`http://localhost:1234/${id}`,{
-
-    })
-  }
+  
   const handleDelete =(id) => {
 fetch(`http://localhost:1234/${id}`,{
   method: "DELETE",
@@ -58,6 +54,19 @@ fetch("http://localhost:1234",{
     
     setId(id);
   };
+  const handlePatch =()=>{
+    const payload ={
+ userId:id,
+name:name,
+status:isChecked
+};
+    fetch(`http://localhost:1234/${id}`,{
+ method: 'PATCH',
+ headers: {'Content-Type': 'application/json'},
+ body: JSON.stringify(payload)
+}).then((res)=>res.json()).then((data)=>setTodo(data));
+setUpdate(false)
+  }
   return (
     <div className="App">
      <input type="text" onChange={(e) => setText(e.target.value)}/>
@@ -78,21 +87,7 @@ fetch("http://localhost:1234",{
        <br></br>
        <input type="checkbox" name="status" onChange={handleOnChange} checked={isChecked}/>
        <br></br>
-       <button onClick={()=>{
-         const payload ={
-      userId:id,
-    name:name,
-    status:isChecked
-    };
-         fetch(`http://localhost:1234/${id}`,{
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload)
-    }).then((res)=>res.json()).then((data)=>setTodo(data));
-    setUpdate(false)
-       }
-       
-       }>Change data</button>
+       <button onClick={handlePatch}>Change data</button>
      </div>: ""}
     </div>
   );
