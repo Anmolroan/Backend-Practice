@@ -7,7 +7,10 @@ function App() {
   const [text,setText] = useState("");
   const [stat,setStatus] = useState(false);
   const [update,setUpdate] = useState(false);
-  const [form,setForm] = useState({})
+  const handleOnChange = () => {
+    setIsChecked(!isChecked);
+    console.log(isChecked)
+  };
   const handlePatch = (id)=>{
     fetch(`http://localhost:1234/${id}`,{
 
@@ -45,7 +48,16 @@ fetch("http://localhost:1234",{
       })
     
     
-  },[])
+  },[]);
+
+  const [name,setName] =useState("");
+  const [isChecked, setIsChecked] = useState(false);
+  const [id,setId]= useState("")
+  const handleUpdate =(id) =>{
+    setUpdate(true);
+    
+    setId(id);
+  };
   return (
     <div className="App">
      <input type="text" onChange={(e) => setText(e.target.value)}/>
@@ -54,19 +66,33 @@ fetch("http://localhost:1234",{
      {todo.map((el,i) => <div key ={el.userId}>
      <span>{el.name}</span>
      <button>{!el.status?"Done":"Not Done"}</button>
-     <button onClick={()=>setUpdate(true)}>Update</button>
+     <button onClick={()=>handleUpdate(el.userId)}>Update</button>
      <button onClick={()=>handleDelete(el.userId)}>Delete</button>
+    
      </div>
      )}
      </div>
      {update  ? <div className="update">
-       <input type="text" name="userId"/>
+      
+       <input type="text" name="name" onChange={(e)=>setName(e.target.value)}/>
        <br></br>
-       <input type="text" name="name"/>
+       <input type="checkbox" name="status" onChange={handleOnChange} checked={isChecked}/>
        <br></br>
-       <input type="text" name="status"/>
-       <br></br>
-       <button onClick={()=>setUpdate(false)}>Change data</button>
+       <button onClick={()=>{
+         const payload ={
+      userId:id,
+    name:name,
+    status:isChecked
+    };
+         fetch(`http://localhost:1234/${id}`,{
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    }).then((res)=>res.json()).then((data)=>setTodo(data));
+    setUpdate(false)
+       }
+       
+       }>Change data</button>
      </div>: ""}
     </div>
   );
